@@ -1,0 +1,52 @@
+*{margin:0; padding:0}
+body{background:#F0E68C}
+.block{max-width:1152px; margin:auto}
+.block1{width:90%; margin:auto; margin-top:50px; background:rgba(238,232,170,0.5)}
+nav{width:100%; height:60px; background:rgba(255,255,255,0.3)}
+#hor a{text-decoration:none; display:block; float:left; height:auto; width:auto; color:#000; padding:0px 20px; text-align:center; margin-right:1px; transition:all 0.7s; line-height:60px; font-size:19px}
+#hor li{list-style:none; position:relative; float:left}
+#hor li ul{position:absolute; left:-9999px; opacity:0; transition:opacity 0.7s}
+#hor li:hover ul{left:0px; opacity:1; z-index:9999; top:60px}
+#hor li ul li a{width:130px; color:#000; margin-bottom:1px; text-align:left; background:rgba(255,255,255,0.5)}
+header{width:90%; height:516px; background:url('maincoon.jpg'); background-size:100%; margin:auto}
+h1{text-align:center; font-size:75px; line-height:100px; color:#FFF; text-shadow:1px 1px 2px rgba(0,0,0,0.5)}
+.block2{width:96,5%; height:auto; background:rgba(189,183,107,0.6); margin-top:40px; padding:20px}
+.block2 li{list-style:none; margin:20px 20px 40px 20px}
+.block2 li p{color:#131313; font-family:arial; font-size:16px; font-weight:bold}
+h2{color:#FAFAFA; font-size:65px; text-align:center; font-weight:bold; text-shadow:1px 1px 2px rgba(0,0,0,0.5); line-height:104px}
+h3{color:#8B4513; font-size:50px; text-align:center; font-weight:bold}
+p{font-family:cambria; margin:20px; font-size:19px; text-align:justify}
+#p2{color:#131313; font-family:arial; font-size:16px; font-weight:bold; text-align:center}
+#p3{color:#131313; font-family:arial; font-size:26px; font-weight:bold; text-align:center}
+span{font-family:cambria; font-size:19px; font-weight:bold}
+img{box-shadow:1px 1px 2px 1px rgba(0,0,0,0.5); width:50%; border-radius: 8px;}
+#img1{float:left; margin:10px}
+#img2{float:right; margin:10px}
+#img3{display:block; margin:auto}
+table{width:70%; margin:auto}
+td,th{outline:2px black solid; background-color:#FFF}
+table p{margin:10px; text-align:center}
+footer{width:100%; background-color:#A0522D; color:#FFF; float:left; clear:left; height:100px; margin:1px}
+
+input{font-family:cambria; margin:0px 20px; font-size:19px; padding:0px 9px}
+#ptrnm{margin-top:10px}
+form{background:#F0E68C; text-align:center; margin-bottom:20px}
+form p{text-align:center}
+#img_file{margin: 10px}
+#gallery {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Автоматическое количество столбцов */
+    gap: 16px;
+  }
+  
+  .gallery-item {
+    display: flex;
+    justify-content: center; height: 200px;
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    
+  }

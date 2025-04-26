@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='page.css'>
+    <title>Наши любимые кошки</title>
+</head>
+<body>
+    <div class="block">
+        <div class="block1">
+            <nav id="hor">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li>
+                        <a href="#">Как выбрать кошку</a>
+                        <ul>
+                            <li><a href="age.html">Возраст</a></li>
+                            <li><a href="breef.html">Порода</a></li>
+                            <li><a href="gender.html">Пол</a></li>
+                            <li><a href="shelter.html">Из приюта</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Как кормить</a>
+                        <ul>
+                            <li><a href="rules.html">9 правил</a></li>
+                            <li><a href="food.html">Сколько давать</a></li>
+                            <li><a href="castrated.html">Кастрированного</a></li>
+                            <li><a href="table.html">Не со стола!</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Как ухаживать</a>
+                        <ul>
+                            <li><a href="parenting.html">Воспитание</a></li>
+                            <li><a href="vaccine.html">Прививки</a></li>
+                            <li><a href="furr.html">Шерсть</a></li>
+                            <li><a href="play.html">Как играть</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <header><h1>Наши любимые кошки</h1></header>
+        <div class="block2">
+            <h2>Кошки наших посетителей</h2>
+            <p>На этой странице будут храниться фотографии счастливых питомцев, чьи хозяева старательно следовали советам с этого сайта.</p>
+            <p>Вы тоже можете выложить фото своего любимца, воспользовавшись формой ниже, но для этого Вам нужно будет зарегестрироваться по этой форме.</p>
+            
+            <form id="frm">
+                <p>Ваш логин: <input id="ptrnm" type="text"></p>
+                <p>Ваш пароль: <input id="psswrd" type="password"></p>
+                <input id="clr" type="button" value="Очистить форму">
+                <input id="sbmt" type="submit" value="Зарегистрироваться"><br>
+                <input type="file" id="img_file" accept="image/png, image/jpeg" disabled>
+            </form>
+
+            <div id="gallery">
+                
+            </div>
+        </div>
+
+        <footer>
+            <p>Автор сайта: Полосин Максим Алексеевич, 4.205-2<br>Технологический стек: HTML5, CSS3, JavaScript стандарта ECMAScript 2024, LocalStorage</p>
+        </footer>
+    </div>
+
+    <script>
+        const ptrnm = document.getElementById("ptrnm");
+        const psswrd = document.getElementById("psswrd");
+        const img_file = document.getElementById("img_file");
+        const frm = document.getElementById("frm");
+        const clr = document.getElementById("clr");
+        const sbmt = document.getElementById("sbmt");
+
+        window.onload = function() {
+            let pics = JSON.parse(localStorage.getItem('images')) || [];
+            let gallery = document.getElementById("gallery");
+            gallery.innerHTML = '';
+
+            pics.forEach(pic => {
+                let item = document.createElement('div');
+				item.setAttribute('class', 'gallery-item');
+				let image = document.createElement('img');
+                image.setAttribute('src', pic.imgData);
+				item.appendChild(image);
+				gallery.appendChild(item);
+            });
+        };
+
+        // Очистка формы
+        clr.onclick = function() {
+            ptrnm.value = "";
+            psswrd.value = "";
+            img_file.disabled = true; // Отключаем возможность загрузки изображения
+        };
+
+        // Обработчик регистрации
+        frm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = ptrnm.value;
+            const password = psswrd.value;
+
+            if (username && password) {
+                let users = JSON.parse(localStorage.getItem("users")) || [];
+
+                // Проверка, существует ли уже пользователь с таким логином
+                const existingUser = users.find(user => user.username === username);
+                if (existingUser) {
+                    alert("Пользователь с таким логином уже существует.");
+                } else {
+                    // Сохраняем нового пользователя
+                    users.push({ username, password });
+                    localStorage.setItem("users", JSON.stringify(users));
+                    alert("Регистрация успешна!");
+                    img_file.disabled = false; // Разрешаем загрузку изображения после регистрации
+                }
+            } else {
+                alert("Пожалуйста, заполните все поля.");
+            }
+        });
+
+        // Обработчик изменения логина или пароля
+        ptrnm.addEventListener('input', checkLogin);
+        psswrd.addEventListener('input', checkLogin);
+
+        function checkLogin() {
+            const username = ptrnm.value;
+            const password = psswrd.value;
+
+            if (username && password) {
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+                const existingUser = users.find(user => user.username === username && user.password === password);
+                img_file.disabled = !existingUser; // Разрешаем загрузку изображения, если пользователь найден
+            } else {
+                img_file.disabled = true; // Отключаем кнопку, если логин или пароль пусты
+            }
+        }
+
+        // Загрузка изображения
+        img_file.addEventListener('change', function() {
+            if (img_file.files.length > 0) {
+                const file = img_file.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imgData = e.target.result;
+                    const user = ptrnm.value;
+                    let images = JSON.parse(localStorage.getItem('images')) || [];
+
+                    // Добавляем изображение в галерею
+                    images.push({ user, imgData });
+                    localStorage.setItem('images', JSON.stringify(images));
+                    alert('Изображение успешно загружено! Обновите страницу, чтобы оно отобразилось.');
+                    img_file.disabled = true; // Отключаем возможность загрузки изображения после успешной загрузки
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
